@@ -2,6 +2,8 @@
 import sys
 import re
 #import telegram
+import asyncio
+
 from telegram import (
     Update,
     InlineKeyboardMarkup,
@@ -67,46 +69,18 @@ def print_lineas(resultado):
 
 
 #HANDLERS
-#----------------------------------------------------------------------------------------
-# Comando lineas
-# lineas - Muestra las líneas de una sede
-def lineas(update: Update, context: CallbackContext):
 
-
-    if not(revision_comando(update, context)):
-        return 0
-
-    codigo=context.user_data['sf']
-
-    texto = 'Estas son las líneas asociadas a la sede *' + codigo + '*\n'
-    # TODO : arreglar el formato
-    resultado = d_lineas.loc[d_lineas['SF'] == codigo][['TipoLinea', 'TECNOLOXIA', 'VBO', 'VSO']]
-    #t_resultado = resultado.to_string(index=False)
-    t_resultado = print_lineas(resultado)
-    texto = texto + '\n' + t_resultado
-
-
-    #update.message.reply_text(text=texto, parse_mode = 'Markdown')
-    context.bot.send_message(chat_id=update.effective_chat.id, text=texto, parse_mode = 'Markdown')
-    registra(update, 'LINEAS')
-
-# ---------------------------------------------------------------------------------------
-
-
-
-
-#----------------------------------------------------------------------------
 
 
 
 
 
 # Definicion de botonera para respuesta
-def botonera():
+#def botonera():
 
-    botones = ['Presente de Indicativo','Pretérito imperfecto de Indicativo','Pretérito perfecto de Indicativo','Pretérito pluscuamperfecto de Indicativo','Futuro de Indicativo','Condicional de Indicativo','Presente de Subxuntivo','Pretérito de Subxuntivo','Futuro de Subxuntivo','Infinitivo','Xerundio','Participio','Imperativo']
-    botonera = InlineKeyboardMarkup(botones)
-    return(botonera)
+    #botones = ['Presente de Indicativo','Pretérito imperfecto de Indicativo','Pretérito perfecto de Indicativo','Pretérito pluscuamperfecto de Indicativo','Futuro de Indicativo','Condicional de Indicativo','Presente de Subxuntivo','Pretérito de Subxuntivo','Futuro de Subxuntivo','Infinitivo','Xerundio','Participio','Imperativo']
+    #botonera = InlineKeyboardMarkup(botones)
+    #return(botonera)
 
 
 
@@ -135,13 +109,18 @@ def crea_botonera():
 # Boton pulsado
 def boton_pulsado(update: Update, context: CallbackContext):
     query = update.callback_query
+
+    # Las Callbackquerys necesitan ser respondidas. No se exactamente lo que quiere decir eso pero es así. Si n lo haces le sale un relojito al botón
     query.answer()
+
     respuesta = int(query.data)
     if (respuesta == context.user_data['respuestacorrecta_valor']):
+        context.user_data['puntuacion'] = context.user_data['puntuacion'] + context.user_data['respuestacorrecta_valor']
         resultado = 'Has respondido con sabiduría pero era facilona' + '\U0001F973'
         context.bot.send_message(chat_id=update.effective_chat.id, text=resultado)
         registra_boton(update, 'ACIERTO')
     else:
+        context.user_data['puntuacion'] = context.user_data['puntuacion'] -10
         resultado = 'Vaya pedazo de error ' + '\U0001F624'
         context.bot.send_message(chat_id=update.effective_chat.id, text=resultado)
         context.bot.send_message(chat_id=update.effective_chat.id, text=context.user_data['respuestacorrecta_texto'],
@@ -169,9 +148,11 @@ def respuesta(update: Update, context: CallbackContext):
 
     if (respuesta == context.user_data['respuestacorrecta_texto']):
         resultado = 'Has respondido con sabiduría ' + '\U0001F973'
+        context.user_data['puntuacion'] = context.user_data['puntuacion'] + context.user_data['respuestacorrecta_valor']
         registra(update, 'ACIERTO')
     else:
         resultado = 'Vamos mal, sigue intentándolo ' + '\U0001F624'
+        context.user_data  ['puntuacion'] = context.user_data['puntuacion'] - 10
         registra(update,'FALLO')
 
     context.bot.send_message(chat_id=update.effective_chat.id,text=resultado)
@@ -181,7 +162,8 @@ def respuesta(update: Update, context: CallbackContext):
 # Selecciona verbo
 def pidopapas(update: Update, context: CallbackContext):
     registra(update, 'PIDOPAPAS')
-    texto = context.user_data['respuestacorrecta_texto'] +'-' + context.user_data['respuestacorrecta_tiempo'] + 'de ' +context.user_data['respuestacorrecta_modo']
+    texto = context.user_data['respuestacorrecta_texto'] +'-' + context.user_data['respuestacorrecta_tiempo'] + 'de ' + context.user_data['respuestacorrecta_modo']
+    context.user_data['puntuacion'] = context.user_data['puntuacion'] - 100
     context.bot.send_message(chat_id=update.effective_chat.id, text=texto)
     return()
 
@@ -219,6 +201,20 @@ def diverbo(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=pregunta,)
 
 
+# ----------------------------------------------------------------------------------------
+# Comando puntuacion
+def reiniciapuntuacion(update: Update, context: CallbackContext):
+    context.user_data['puntuacion'] = 0
+    context.bot.send_message(chat_id=update.effective_chat.id,text='Puntuación reiniciada')
+
+
+
+# ----------------------------------------------------------------------------------------
+# Comando puntuacion
+def puntuacion(update: Update, context: CallbackContext):
+    puntuacion = context.user_data['puntuacion']
+    context.bot.send_message(chat_id=update.effective_chat.id,text='Tu puntuación es de '+ str(puntuacion) + ' puntos')
+
 
 # ----------------------------------------------------------------------------------------
 # Comando start
@@ -235,6 +231,7 @@ def main():
     global d_verbos
     global d_tiempos
     global botonera
+
 
     d_verbos = pd.read_csv(open('input/lverbos.csv'),sep=',')
     d_tiempos = pd.read_csv(open('input/ltiempos.csv'),sep=',')
@@ -255,7 +252,9 @@ def main():
     dispatcher.add_handler(CommandHandler('diverbo', diverbo))
     dispatcher.add_handler(CommandHandler('ditiempo', ditiempo))
     dispatcher.add_handler(CommandHandler('pidopapas', pidopapas))
-    #dispatcher.add_handler(MessageHandler(Filters.text, respuesta))
+    dispatcher.add_handler(CommandHandler('puntuacion', puntuacion))
+    dispatcher.add_handler(CommandHandler('reiniciapuntuacion', reiniciapuntuacion))
+    dispatcher.add_handler(MessageHandler(Filters.text, respuesta))
     dispatcher.add_handler(CallbackQueryHandler(boton_pulsado))
 
 
