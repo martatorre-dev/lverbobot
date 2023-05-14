@@ -1,1 +1,1 @@
-lverbobot_token = '5378417199:AAHp2CY0FZ4Pib-bA-yFKpVxXA4XCkGa6BI'
+lverbobot_token = '6016703766:AAE0sJbP7mN6JA9HGsWHVEBB3iwgJOFtKVM'
