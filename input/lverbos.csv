@@ -1,0 +1,60 @@
+resposta,modo,tempo,persoa,cantos,valor,verbo
+río,indicativo,presente,1,singular,10,rir
+ris,indicativo,presente,2,singular,10,rir
+ri,indicativo,presente,3,singular,10,rir
+rimos,indicativo,presente,1,plural,10,rir
+rides,indicativo,presente,2,plural,10,rir
+rin,indicativo,presente,3,plural,10,rir
+ría,indicativo,pretérito imperfecto,1,singular,20,rir
+rías,indicativo,pretérito imperfecto,2,singular,20,rir
+ría,indicativo,pretérito imperfecto,3,singular,20,rir
+riamos,indicativo,pretérito imperfecto,1,plural,20,rir
+riades,indicativo,pretérito imperfecto,2,plural,20,rir
+rían,indicativo,pretérito imperfecto,3,plural,20,
+rin,indicativo,pretérito perfecto,1,singular,24,rir
+riches,indicativo,pretérito perfecto,2,singular,24,rir
+riu,indicativo,pretérito perfecto,3,singular,24,rir
+rimos,indicativo,pretérito perfecto,1,plural,24,rir
+ristes,indicativo,pretérito perfecto,2,plural,24,rir
+riron,indicativo,pretérito perfecto,3,plural,24,rir
+rirei,indicativo,futuro,1,singular,30,rir
+rirás,indicativo,futuro,2,singular,30,rir
+rirá,indicativo,futuro,3,singular,30,rir
+riremos,indicativo,futuro,1,plural,30,rir
+riredes,indicativo,futuro,2,plural,30,rir
+rirán,indicativo,futuro,3,plural,30,rir
+rira,indicativo,pretérito pluscuamperfecto,1,singular,28,rir
+riras,indicativo,pretérito pluscuamperfecto,2,singular,28,rir
+rira,indicativo,pretérito pluscuamperfecto,3,singular,28,rir
+riramos,indicativo,pretérito pluscuamperfecto,1,plural,28,rir
+rirades,indicativo,pretérito pluscuamperfecto,2,plural,28,rir
+riran,indicativo,pretérito pluscuamperfecto,3,plural,28,rir
+riría,indicativo,condicional,1,singular,40,rir
+rirías,indicativo,condicional,2,singular,40,rir
+riría,indicativo,condicional,3,singular,40,rir
+ririamos,indicativo,condicional,1,plural,40,rir
+ririades,indicativo,condicional,2,plural,40,rir
+rirían,indicativo,condicional,3,plural,40,rir
+ría,subxuntivo,presente,1,singular,110,rir
+rías,subxuntivo,presente,2,singular,110,rir
+ría,subxuntivo,presente,3,singular,110,rir
+riamos,subxuntivo,presente,1,plural,110,rir
+riades,subxuntivo,presente,2,plural,110,rir
+rían,subxuntivo,presente,3,plural,110,rir
+rise,subxuntivo,pretérito,1,singular,120,rir
+rises,subxuntivo,pretérito,2,singular,120,rir
+rise,subxuntivo,pretérito,3,singular,120,rir
+rísemos,subxuntivo,pretérito,1,plural,120,rir
+rísedes,subxuntivo,pretérito,2,plural,120,rir
+rísen,subxuntivo,pretérito,3,plural,120,rir
+rir,subxuntivo,futuro,1,singular,130,rir
+rires,subxuntivo,futuro,2,singular,130,rir
+rir,subxuntivo,futuro,3,singular,130,rir
+rirmos,subxuntivo,futuro,1,plural,130,rir
+rirdes,subxuntivo,futuro,2,plural,130,rir
+riren,subxuntivo,futuro,3,plural,130,rir
+rindo,xerundio,-,-,-,210,rir
+rido,participio,-,-,-,220,rir
+rido,infinitivo,-,-,-,200,rir
+ir,imperativo,-,-,singular,230,rir
+ride,imperativo,-,-,plural,230,rir
